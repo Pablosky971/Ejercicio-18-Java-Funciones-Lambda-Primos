@@ -6,7 +6,7 @@ public class MainCalculoPrimosLambda {
 
 	@FunctionalInterface
 	interface ComprobacionPrimo  {
-		boolean comprobacionPrimo(int p);
+		Runnable comprobacionPrimo(int p);
 	}
 	
 	public static void main(String[] args) {
@@ -26,35 +26,45 @@ public class MainCalculoPrimosLambda {
 		
 		
 		ComprobacionPrimo cp = p -> {
-		boolean primo = true;
+		
 		if(p == 0 || p == 1 || p == 4) {
-			primo = false;
+			System.out.println("El número " + p + " no es primo, sino compuesto.");;
 			
 		} else {
 			
 			for(int i = 2; i < p; i++) {
 				
 				if(p%i == 0 ) {
-					primo = false;
+					System.out.println("El número " + p + " no es primo, sino compuesto.");;
 					break;
 				} else {
-					continue;
+					if(i == p-1) {
+						System.out.println("El número " + p + " es primo.");
+					} else {
+						continue;
+					}
 				}
-				
-				
+				 
 				
 			}
 		}
 		
-		System.out.println("El número " + p + " es primo: " + primo);
-		return primo;
+		
+		return null;
+		
 	
 	};
 	
-	Thread h1 = new Thread();
-	Thread h2 = new Thread();
-	Thread h3 = new Thread();
+	Thread h1 = new Thread(cp.comprobacionPrimo(p1));
+	Thread h2 = new Thread(cp.comprobacionPrimo(p2));
+	Thread h3 = new Thread(cp.comprobacionPrimo(p3));
 	
+	
+	// Probamos:
+	
+	h1.start();
+	h2.start();
+	h3.start();
 
 }
 
